@@ -113,6 +113,22 @@ footer{background:var(--sea-deep);color:rgba(255,255,255,.4);text-align:center;p
           <input type="date" id="vertrek" name="Departure date" required>
           <span class="error-msg">Required</span>
         </div>
+        <div class="field-group" id="fg-aankomsttijd" style="grid-column:1/-1">
+          <label>Expected arrival time at the apartment *</label>
+          <select id="aankomsttijd" name="Expected arrival time at the apartment" required>
+            <option value="">Select a time...</option>
+            <option>15:00 – 16:00</option>
+            <option>16:00 – 17:00</option>
+            <option>17:00 – 18:00</option>
+            <option>18:00 – 19:00</option>
+            <option>19:00 – 20:00</option>
+            <option>20:00 – 21:00</option>
+            <option>21:00 – 22:00</option>
+            <option>After 22:00 (please contact us)</option>
+          </select>
+          <span class="error-msg">Required</span>
+          <p style="font-size:.75rem;color:var(--text-muted);margin-top:.3rem">Check-in is available from 15:00. If you expect to arrive outside these hours, please contact us at info@lacasa-alegria.com.</p>
+        </div>
       </div>
     </div>
 
@@ -245,7 +261,7 @@ function updatePreviews() {
 
 function validateForm() {
   let valid = true;
-  ['fg-ref','fg-email','fg-aankomst','fg-vertrek'].forEach(id => {
+  ['fg-ref','fg-email','fg-aankomst','fg-vertrek','fg-aankomsttijd'].forEach(id => {
     const fg = document.getElementById(id);
     const input = fg.querySelector('input');
     if (!input.value.trim() || (input.type === 'email' && !input.validity.valid)) {
