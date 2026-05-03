@@ -435,7 +435,7 @@ footer p{font-size:.83rem}
     <h2 class="section-title" data-i18n="contact_title">Een vraag of <em>meer informatie?</em></h2>
     <p style="color:var(--text-muted);max-width:540px;line-height:1.8;margin-bottom:2rem" data-i18n="contact_desc">Neem gerust contact met ons op via onderstaand formulier. We reageren zo snel mogelijk — doorgaans binnen één werkdag.</p>
     <div style="max-width:580px">
-      <form action="https://formspree.io/f/xkoygyqa" method="POST" id="contactForm">
+      <form action="https://formspree.io/f/xnjwjovq" method="POST" id="contactForm">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
           <div>
             <label style="font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);font-weight:500;display:block;margin-bottom:.3rem" data-i18n="contact_name">Naam</label>
@@ -476,7 +476,7 @@ document.getElementById('contactForm')?.addEventListener('submit',async function
   btn.disabled=true;btn.textContent='...';
   const fd=new FormData(this);
   try{
-    const r=await fetch('https://formspree.io/f/xkoygyqa',{method:'POST',body:fd,headers:{Accept:'application/json'}});
+    const r=await fetch('https://formspree.io/f/xnjwjovq',{method:'POST',body:fd,headers:{Accept:'application/json'}});
     if(r.ok){this.style.display='none';document.getElementById('contactSuccess').style.display='block';}
     else{btn.disabled=false;btn.textContent=T[lang].contact_send;}
   }catch{btn.disabled=false;btn.textContent=T[lang].contact_send;}
