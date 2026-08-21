@@ -188,6 +188,7 @@ const MONTHS = ['January','February','March','April','May','June','July','August
 function dayOptions(){let s='';for(let d=1;d<=31;d++)s+=`<option value="${String(d).padStart(2,'0')}">${d}</option>`;return s;}
 function monthOptions(){return MONTHS.map((m,i)=>`<option value="${String(i+1).padStart(2,'0')}">${m}</option>`).join('');}
 function yearOptions(){const now=new Date().getFullYear();let s='';for(let y=now-14;y>=now-110;y--)s+=`<option value="${y}">${y}</option>`;return s;}
+function docYearOptions(){const now=new Date().getFullYear();let s='';for(let y=now;y>=now-40;y--)s+=`<option value="${y}">${y}</option>`;return s;}
 
 function updateDob(i){
   const card=document.getElementById(`guest-card-${i}`);
@@ -195,6 +196,14 @@ function updateDob(i){
   const m=card.querySelector('.dob-month').value;
   const y=card.querySelector('.dob-year').value;
   card.querySelector('.dob-value').value=(d&&m&&y)?`${y}-${m}-${d}`:'';
+}
+
+function updateDoc(i){
+  const card=document.getElementById(`guest-card-${i}`);
+  const d=card.querySelector('.doc-day').value;
+  const m=card.querySelector('.doc-month').value;
+  const y=card.querySelector('.doc-year').value;
+  card.querySelector('.doc-value').value=(d&&m&&y)?`${y}-${m}-${d}`:'';
 }
 
 function changeGuests(delta) {
@@ -270,8 +279,22 @@ function createGuestCard(i) {
       </div>
       <div class="field-group" id="fg-docuit-${i}">
         <label>Document issue date *</label>
-        <input type="date" name="Guest ${i} - Document issue date" required>
-        <span class="error-msg">Required</span>
+        <div class="dob-group">
+          <select class="doc-day" onchange="updateDoc(${i})" required>
+            <option value="">Day</option>
+            ${dayOptions()}
+          </select>
+          <select class="doc-month" onchange="updateDoc(${i})" required>
+            <option value="">Month</option>
+            ${monthOptions()}
+          </select>
+          <select class="doc-year" onchange="updateDoc(${i})" required>
+            <option value="">Year</option>
+            ${docYearOptions()}
+          </select>
+        </div>
+        <input type="hidden" name="Guest ${i} - Document issue date" class="doc-value">
+        <span class="error-msg">Please select day, month and year</span>
       </div>
       <div class="field-group full" id="fg-adres-${i}">
         <label>Home address *</label>
@@ -309,6 +332,8 @@ function validateForm() {
       let ok;
       if (field === 'geb') {
         ok = !!fg.querySelector('.dob-value').value;
+      } else if (field === 'docuit') {
+        ok = !!fg.querySelector('.doc-value').value;
       } else {
         const input = fg.querySelector('input, select');
         ok = !!input.value.trim();
