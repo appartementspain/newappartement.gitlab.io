@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guest Registration – La Casa Alegría</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sand:#f5f0e8;--warm-white:#faf8f4;--sea:#2d6a7f;--sea-light:#4a8fa6;
+  --sea-deep:#1a4a5c;--terracotta:#c87941;--terracotta-light:#d4956b;
+  --text:#2a2520;--text-muted:#7a6f65;--border:rgba(45,106,127,0.15);
+  --success:#2d7f5e;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--sand);color:var(--text);min-height:100vh}
+nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:.9rem 2.5rem;background:rgba(250,248,244,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--sea-deep);text-decoration:none;letter-spacing:.04em}
+.nav-logo span{color:var(--terracotta);font-style:italic}
+.nav-back{font-size:.8rem;color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-back:hover{color:var(--sea)}
+.hero{background:var(--sea-deep);color:white;padding:3.5rem 2rem 2.5rem;text-align:center}
+.hero-label{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--terracotta-light);margin-bottom:.6rem}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:300;line-height:1.2;margin-bottom:.6rem}
+.hero-title em{font-style:italic;color:rgba(255,255,255,.55)}
+.hero-desc{font-size:.88rem;color:rgba(255,255,255,.55);max-width:520px;margin:0 auto}
+.main{max-width:720px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
+.info-box{background:white;border:1px solid var(--border);border-left:3px solid var(--sea);border-radius:0 6px 6px 0;padding:1rem 1.2rem;margin-bottom:2rem;font-size:.85rem;color:var(--text-muted);line-height:1.6}
+.info-box strong{color:var(--sea-deep)}
+.booking-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.booking-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--sea-deep)}
+.guests-counter{display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--text-muted)}
+.counter-btn{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:white;color:var(--sea);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.counter-btn:hover{background:var(--sea);color:white;border-color:var(--sea)}
+.counter-val{font-weight:500;color:var(--sea-deep);min-width:1.2rem;text-align:center;font-size:1rem}
+.guests-container{display:flex;flex-direction:column;gap:1.2rem;margin-bottom:2rem}
+.guest-card{background:white;border-radius:8px;border:1px solid var(--border);overflow:hidden;transition:box-shadow .2s}
+.guest-card:focus-within{box-shadow:0 4px 20px rgba(45,106,127,0.12)}
+.guest-card-header{display:flex;align-items:center;gap:.8rem;padding:.9rem 1.2rem;background:var(--sea-deep);color:white}
+.guest-nr{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;opacity:.6}
+.guest-name-preview{font-size:.85rem;font-weight:500;flex:1}
+.guest-card-body{padding:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+@media(max-width:500px){.guest-card-body{grid-template-columns:1fr}.booking-header{flex-direction:column;align-items:flex-start;gap:.8rem}nav{padding:.9rem 1.2rem}.main{padding:2rem 1rem 3rem}}
+.field-group{display:flex;flex-direction:column;gap:.3rem}
+.field-group.full{grid-column:1/-1}
+label{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);font-weight:500}
+input,select{width:100%;padding:.55rem .75rem;border:1px solid var(--border);border-radius:4px;font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--text);background:var(--warm-white);transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus{outline:none;border-color:var(--sea);box-shadow:0 0 0 3px rgba(45,106,127,0.08)}
+input::placeholder{color:#bbb}
+select{cursor:pointer}
+.booking-ref-section{background:white;border-radius:8px;border:1px solid var(--border);padding:1.2rem;margin-bottom:2rem}
+.booking-ref-title{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--terracotta);margin-bottom:.8rem;font-weight:500}
+.submit-section{text-align:center}
+.btn-submit{background:var(--terracotta);color:white;border:none;border-radius:4px;padding:1rem 2.5rem;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;transition:background .2s,transform .15s;letter-spacing:.04em}
+.btn-submit:hover{background:#b5682f;transform:translateY(-1px)}
+.btn-submit:active{transform:translateY(0)}
+.btn-submit:disabled{background:#ccc;cursor:not-allowed;transform:none}
+.success-box{display:none;background:white;border-radius:8px;border:1px solid rgba(45,127,94,0.3);padding:2.5rem;text-align:center}
+.success-box.show{display:block}
+.success-icon{font-size:2.5rem;margin-bottom:1rem}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--success);margin-bottom:.5rem}
+.success-desc{color:var(--text-muted);font-size:.9rem;line-height:1.6}
+.error-msg{color:#c0392b;font-size:.8rem;margin-top:.3rem;display:none}
+.field-group.error input,.field-group.error select{border-color:#c0392b}
+.field-group.error .error-msg{display:block}
+.form-error-banner{display:none;background:#fdecea;border:1px solid #c0392b;border-left:3px solid #c0392b;border-radius:0 6px 6px 0;padding:.9rem 1.1rem;margin-bottom:1.5rem;color:#8b2820;font-size:.85rem;line-height:1.5}
+.form-error-banner.show{display:block}
+.dob-group{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:.4rem}
+.dob-group select{padding:.55rem .4rem}
+footer{background:var(--sea-deep);color:rgba(255,255,255,.4);text-align:center;padding:1.5rem;font-size:.78rem}
+.footer-logo{font-family:'Cormorant Garamond',serif;color:white;font-size:1rem;margin-bottom:.3rem}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">La Casa <span>Alegría</span></a>
+  <a href="index.html" class="nav-back">← Back to website</a>
+</nav>
+
+<div class="hero">
+  <p class="hero-label">La Casa Alegría · Los Alcázares</p>
+  <h1 class="hero-title">Guest Registration <em>SES.HOSPEDAJES</em></h1>
+  <p class="hero-desc">Please fill in the details below for all guests aged 14 and over. This is a legal requirement under Spanish law.</p>
+</div>
+
+<div class="main">
+
+  <div class="info-box">
+    <strong>Why is this required?</strong> Under Spanish law (Royal Decree 933/2021), landlords are obliged to report the identity details of all guests aged 14 and over to the Spanish authorities via SES.HOSPEDAJES within 24 hours of arrival. Please submit your details <strong>at least 48 hours before arrival</strong>. Valid documents: passport or EU identity card (driving licences are not accepted).
+  </div>
+
+  <form id="regForm" novalidate>
+
+    <div class="form-error-banner" id="formErrorBanner">Please check the highlighted fields below and complete any missing details.</div>
+
+    <!-- BOOKING DETAILS -->
+    <div class="booking-ref-section">
+      <div class="booking-ref-title">Booking details</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+        <div class="field-group" id="fg-ref">
+          <label>Booking reference</label>
+          <input type="text" id="ref" name="Booking reference" placeholder="e.g. BM-2025-001" required>
+          <span class="error-msg">Required</span>
+        </div>
+        <div class="field-group" id="fg-email">
+          <label>Your e-mail address</label>
+          <input type="email" id="email" name="Lead guest e-mail" placeholder="your@email.com" required>
+          <span class="error-msg">Please enter a valid e-mail address</span>
+        </div>
+        <div class="field-group" id="fg-aankomst">
+          <label>Arrival date</label>
+          <input type="date" id="aankomst" name="Arrival date" required>
+          <span class="error-msg">Required</span>
+        </div>
+        <div class="field-group" id="fg-vertrek">
+          <label>Departure date</label>
+          <input type="date" id="vertrek" name="Departure date" required>
+          <span class="error-msg">Required</span>
+        </div>
+        <div class="field-group" id="fg-aankomsttijd" style="grid-column:1/-1">
+          <label>Expected arrival time at the apartment *</label>
+          <select id="aankomsttijd" name="Expected arrival time at the apartment" required>
+            <option value="">Select a time...</option>
+            <option>15:00 – 16:00</option>
+            <option>16:00 – 17:00</option>
+            <option>17:00 – 18:00</option>
+            <option>18:00 – 19:00</option>
+            <option>19:00 – 20:00</option>
+            <option>20:00 – 21:00</option>
+            <option>21:00 – 22:00</option>
+            <option>After 22:00 (please contact us)</option>
+          </select>
+          <span class="error-msg">Required</span>
+          <p style="font-size:.75rem;color:var(--text-muted);margin-top:.3rem">Check-in is available from 15:00. <strong style="color:var(--text)">Please note: if you arrive later than indicated without notifying us in advance, additional waiting costs will be charged payable on site — €25 for the first 30 minutes, then €7.50 per 15 minutes thereafter.</strong> For arrivals outside the listed hours, please contact us at info@lacasa-alegria.com.</p>
+          <p style="font-size:.75rem;color:var(--text-muted);margin-top:.5rem">We will pass your arrival time on to our keyholder. For any last-minute coordination on the day of arrival, you can reach the keyholder directly at <strong style="color:var(--sea-deep)"><a href="tel:+32485309826" style="color:var(--sea-deep);text-decoration:none">+32 485 30 98 26</a></strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- NUMBER OF GUESTS -->
+    <div class="booking-header">
+      <div class="booking-title">Guests (aged 14 and over)</div>
+      <div class="guests-counter">
+        <button type="button" class="counter-btn" onclick="changeGuests(-1)">−</button>
+        <span class="counter-val" id="guestCount">1</span>
+        <button type="button" class="counter-btn" onclick="changeGuests(1)">+</button>
+        <span>persons</span>
+      </div>
+    </div>
+
+    <!-- GUEST CARDS -->
+    <div class="guests-container" id="guestsContainer"></div>
+
+    <!-- SUBMIT -->
+    <div class="submit-section">
+      <button type="submit" class="btn-submit" id="submitBtn">Submit details →</button>
+      <p style="margin-top:.8rem;font-size:.78rem;color:var(--text-muted)">Your details are transmitted securely and used solely for the legally required registration.</p>
+    </div>
+
+  </form>
+
+  <!-- SUCCESS -->
+  <div class="success-box" id="successBox">
+    <div class="success-icon">✓</div>
+    <div class="success-title">Details received</div>
+    <p class="success-desc">Thank you! We have received the details of your travel party and will take care of the mandatory registration with SES.HOSPEDAJES.<br><br>We will inform our keyholder of your expected arrival time. Should you need to reach them for any last-minute coordination on the day of arrival, you can contact them directly at <strong><a href="tel:+32485309826" style="color:var(--sea-deep)">+32 485 30 98 26</a></strong>.<br><br>We look forward to welcoming you in Los Alcázares!</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">La Casa Alegría</div>
+  <p>Los Alcázares · Mar Menor · Murcia, España · info@lacasa-alegria.com</p>
+</footer>
+
+<script>
+// ── CONFIG ───────────────────────────────────────────────────────────────────
+// Replace with your Formspree endpoint after creating a free account at
+// formspree.io → New Form → copy the action URL below
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xkoygyqa';
+// ─────────────────────────────────────────────────────────────────────────────
+
+let numGuests = 1;
+
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+function dayOptions(){let s='';for(let d=1;d<=31;d++)s+=`<option value="${String(d).padStart(2,'0')}">${d}</option>`;return s;}
+function monthOptions(){return MONTHS.map((m,i)=>`<option value="${String(i+1).padStart(2,'0')}">${m}</option>`).join('');}
+function yearOptions(){const now=new Date().getFullYear();let s='';for(let y=now-14;y>=now-110;y--)s+=`<option value="${y}">${y}</option>`;return s;}
+
+function updateDob(i){
+  const card=document.getElementById(`guest-card-${i}`);
+  const d=card.querySelector('.dob-day').value;
+  const m=card.querySelector('.dob-month').value;
+  const y=card.querySelector('.dob-year').value;
+  card.querySelector('.dob-value').value=(d&&m&&y)?`${y}-${m}-${d}`:'';
+}
+
+function changeGuests(delta) {
+  numGuests = Math.max(1, Math.min(6, numGuests + delta));
+  document.getElementById('guestCount').textContent = numGuests;
+  renderGuests();
+}
+
+function renderGuests() {
+  const container = document.getElementById('guestsContainer');
+  while (container.children.length < numGuests) {
+    container.appendChild(createGuestCard(container.children.length + 1));
+  }
+  while (container.children.length > numGuests) {
+    container.removeChild(container.lastChild);
+  }
+  updatePreviews();
+}
+
+function createGuestCard(i) {
+  const card = document.createElement('div');
+  card.className = 'guest-card';
+  card.id = `guest-card-${i}`;
+  card.innerHTML = `
+    <div class="guest-card-header">
+      <span class="guest-nr">Guest ${i}</span>
+      <span class="guest-name-preview" id="preview-${i}">Please fill in details</span>
+    </div>
+    <div class="guest-card-body">
+      <div class="field-group full" id="fg-naam-${i}">
+        <label>Full name *</label>
+        <input type="text" name="Guest ${i} - Full name" placeholder="First name Last name" required
+          oninput="updatePreview(${i})">
+        <span class="error-msg">Required</span>
+      </div>
+      <div class="field-group" id="fg-geb-${i}">
+        <label>Date of birth *</label>
+        <div class="dob-group">
+          <select class="dob-day" onchange="updateDob(${i})" required>
+            <option value="">Day</option>
+            ${dayOptions()}
+          </select>
+          <select class="dob-month" onchange="updateDob(${i})" required>
+            <option value="">Month</option>
+            ${monthOptions()}
+          </select>
+          <select class="dob-year" onchange="updateDob(${i})" required>
+            <option value="">Year</option>
+            ${yearOptions()}
+          </select>
+        </div>
+        <input type="hidden" name="Guest ${i} - Date of birth" class="dob-value">
+        <span class="error-msg">Please select day, month and year</span>
+      </div>
+      <div class="field-group" id="fg-nat-${i}">
+        <label>Nationality *</label>
+        <input type="text" name="Guest ${i} - Nationality" placeholder="e.g. Dutch" required>
+        <span class="error-msg">Required</span>
+      </div>
+      <div class="field-group" id="fg-doctype-${i}">
+        <label>Document type *</label>
+        <select name="Guest ${i} - Document type" required>
+          <option value="">Select...</option>
+          <option value="Passport">Passport</option>
+          <option value="EU identity card">EU identity card</option>
+        </select>
+        <span class="error-msg">Required</span>
+      </div>
+      <div class="field-group" id="fg-docnr-${i}">
+        <label>Document number *</label>
+        <input type="text" name="Guest ${i} - Document number" placeholder="e.g. AB1234567" required>
+        <span class="error-msg">Required</span>
+      </div>
+      <div class="field-group" id="fg-docuit-${i}">
+        <label>Document issue date *</label>
+        <input type="date" name="Guest ${i} - Document issue date" required>
+        <span class="error-msg">Required</span>
+      </div>
+      <div class="field-group full" id="fg-adres-${i}">
+        <label>Home address *</label>
+        <input type="text" name="Guest ${i} - Address" placeholder="Street, number, postcode, city, country" required>
+        <span class="error-msg">Required</span>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+function updatePreview(i) {
+  const nameInput = document.querySelector(`#guest-card-${i} input[type="text"]`);
+  const preview = document.getElementById(`preview-${i}`);
+  preview.textContent = nameInput?.value.trim() || 'Please fill in details';
+}
+
+function updatePreviews() {
+  for (let i = 1; i <= numGuests; i++) updatePreview(i);
+}
+
+function validateForm() {
+  let valid = true;
+  ['fg-ref','fg-email','fg-aankomst','fg-vertrek','fg-aankomsttijd'].forEach(id => {
+    const fg = document.getElementById(id);
+    const input = fg.querySelector('input, select');
+    if (!input.value.trim() || (input.type === 'email' && !input.validity.valid)) {
+      fg.classList.add('error'); valid = false;
+    } else { fg.classList.remove('error'); }
+  });
+  for (let i = 1; i <= numGuests; i++) {
+    ['naam','geb','nat','doctype','docnr','docuit','adres'].forEach(field => {
+      const fg = document.getElementById(`fg-${field}-${i}`);
+      if (!fg) return;
+      let ok;
+      if (field === 'geb') {
+        ok = !!fg.querySelector('.dob-value').value;
+      } else {
+        const input = fg.querySelector('input, select');
+        ok = !!input.value.trim();
+      }
+      if (!ok) { fg.classList.add('error'); valid = false; }
+      else { fg.classList.remove('error'); }
+    });
+  }
+  document.getElementById('formErrorBanner').classList.toggle('show', !valid);
+  return valid;
+}
+
+document.getElementById('regForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (!validateForm()) {
+    document.getElementById('formErrorBanner').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  const formData = new FormData(this);
+  formData.append('Number of guests', numGuests);
+  try {
+    const response = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
+    });
+    if (response.ok) {
+      document.getElementById('regForm').style.display = 'none';
+      document.getElementById('successBox').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Submit details →';
+      alert('Something went wrong. Please try again or contact us at info@lacasa-alegria.com');
+    }
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Submit details →';
+    alert('Something went wrong. Please check your internet connection and try again.');
+  }
+});
+
+renderGuests();
+</script>
+</body>
+</html>
